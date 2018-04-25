@@ -12,11 +12,14 @@ public class Shoot : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKeyDown("space"))
+        if (Input.GetMouseButtonDown(0))
         {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             var temp=Instantiate(arrow);
             temp.transform.position = bow.transform.position;
-            temp.GetComponent<Rigidbody>().AddForce(new Vector3(0, 0, 0.1f), ForceMode.Impulse);
+            temp.transform.LookAt(ray.GetPoint(20));
+            Debug.Log(ray.direction);
+            temp.GetComponent<Rigidbody>().AddForce(ray.direction*4, ForceMode.Impulse);
         }
 	}
 }
